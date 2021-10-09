@@ -1,0 +1,95 @@
+94
+size
+get
+size
+get
+size
+get
+put -20
+get
+put 58
+size
+size
+get
+size
+put 28
+get
+put -97
+size
+put -48
+size
+get
+get
+size
+put 46
+size
+get
+size
+size
+get
+size
+put -86
+put -74
+put -95
+put 41
+size
+size
+get
+get
+size
+put -68
+put -95
+size
+get
+put -9
+get
+size
+size
+size
+put 74
+get
+size
+put -15
+get
+size
+put -53
+put -90
+size
+size
+size
+put -27
+get
+get
+size
+size
+size
+get
+size
+size
+put 72
+get
+size
+size
+put 78
+put 85
+size
+size
+get
+get
+get
+put 52
+get
+size
+size
+put 15
+size
+size
+size
+size
+get
+get
+size
+put 82
+size
+put 66
+put 9
