@@ -10,7 +10,7 @@ import (
 )
 
 const filePath = "input.txt"
-const maxCapacity = 1024
+const maxCapacity = 10000000
 
 func main() {
 	var err error
@@ -25,19 +25,17 @@ func main() {
 	scanner.Split(bufio.ScanLines)
 	scanner.Buffer(make([]byte, maxCapacity), maxCapacity)
 
-	var i, cost int
-	var 
-
-	mb := &MoneyBox{}
+	var i, cost, lenght int
+	var mb = &MoneyBox{}
 
 	for scanner.Scan() {
 		val := scanner.Text()
 		if i == 0 {
-			if mb.days, err = strconv.Atoi(val); err != nil {
+			if lenght, err = strconv.Atoi(val); err != nil {
 				log.Fatal(err)
 			}
 		} else if i == 1 {
-			mb.amounts = strings.Split(val, " ")
+			mb.countByDay = strings.Split(val, " ")
 		} else if i == 2 {
 			if cost, err = strconv.Atoi(val); err != nil {
 				log.Fatal(err)
@@ -46,34 +44,46 @@ func main() {
 		i++
 	}
 
-	ret, err := mb.binarySearch(cost, 0, mb.days-1)
+	one, err := mb.binarySearch(cost, 0, lenght)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	os.Stdout.WriteString(fmt.Sprintf("%d %d", ret, ret))
+	two, err := mb.binarySearch(cost*2, 0, lenght)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	os.Stdout.WriteString(fmt.Sprintf("%d %d", one, two))
 }
 
 type MoneyBox struct {
-	amounts []string
-	days    int
+	countByDay []string
 }
 
 func (mb *MoneyBox) binarySearch(cost, left, right int) (int, error) {
+	var previousVal, val int
+	var err error
+
 	if right <= left {
 		return -1, nil
 	}
 	index := (right + left) / 2
-	val, err := strconv.Atoi(mb.amounts[left+index])
-	if err != nil {
+	if val, err = strconv.Atoi(mb.countByDay[index]); err != nil {
 		return -1, err
 	}
-	if val == cost {
-		return index, nil
+
+	if index > 0 {
+		if previousVal, err = strconv.Atoi(mb.countByDay[index-1]); err != nil {
+			return -1, err
+		}
 	}
-	if val > cost {
-		return mb.binarySearch(cost, index, right)
+
+	if val >= cost && previousVal < cost {
+		return index + 1, nil
 	}
-	
+	if val < cost {
+		return mb.binarySearch(cost, index+1, right)
+	}
 	return mb.binarySearch(cost, left, index)
 }
